@@ -1,0 +1,103 @@
+<h5>
+  <span <!--class="badgebadge-success"-- >Сейчас в сети: <%= userSel.name %></span>
+</h5>
+  <script>
+    let idsArr = []
+    function updateCheckboxes(){
+          idsArr = []
+          document.querySelectorAll('input[name="myAction"]').forEach(v=>(v.checked==true)?idsArr.push(v.id):v)
+          for (i=0;i<document.getElementsByName('myAction').length;i++){
+            if(document.getElementsByName('myAction')[i].checked == false){
+              document.getElementsByName('all')[0].checked = false
+              break
+            }
+            else{
+              document.getElementsByName('all')[0].checked = true
+            }
+          }
+      }
+
+    function updateAllCheckboxes(){
+        document.getElementsByName('myAction').forEach(v=>v.checked=document.getElementsByName('all')[0].checked)
+        updateCheckboxes()
+      }  
+  
+    function updateValue(idsArr,n){
+      document.getElementsByName(n)[0].value = idsArr
+    }
+  
+  </script>
+
+  <ul style="list-style-type: none;">
+    <li style="float:left">
+      <form method="POST">
+        <input type="hidden" value="block" name="action">
+        <input type="hidden" name="blocked">
+        <button  type="submit" onclick="updateValue(idsArr,'blocked')">
+          Заблокировать выбранных 
+        </button>
+      </form>
+    </li>
+    <li style="float:left">
+     <form method="POST">
+        <input type="hidden" value="unblock" name="action">
+        <input type="hidden" name="unblocked">
+        <button type="submit" onclick="updateValue(idsArr,'unblocked')">
+          Разблокировать выбранных
+        </button>
+      </form>
+    </li>
+    <li style="float:left">
+     <form method="POST">
+        <input type="hidden" value="delete" name="action">
+        <input type="hidden" name="deleted">
+        <button type="submit" onclick="updateValue(idsArr,'deleted')">
+          Удалить выбранных
+        </button>
+    </form>
+    </li>
+    <li style="float:right">    
+      <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">
+          Выйти 
+        </button>
+    </form>
+  </li>
+  </ul>
+<table class="table" >
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" width=300>
+            <p class="form-group form-check">
+              <input onchange="updateAllCheckboxes()"class="form-check-input" type="checkbox" name="all">  
+              <label class="form-check-label" for="defaultCheck">Выделить всех</label>  
+            </p>        
+        </th>
+        <th scope="col" width=300>ID</th>
+        <th scope="col" width=300>Имя</th>
+        <th scope="col" width=300>Email</th>
+        <th scope="col" width=300>Дата регистрации</th>
+        <th scope="col" width=300>Дата последнего входа</th>
+        <th scope="col" width=300>Статус</th>
+      </tr>
+    </thead>
+      <tbody>
+        <% usersArr.forEach((v,i,a)=>{ %>         
+          <tr>
+            <td>
+              <form class="form-group form-check">
+                <input onchange="updateCheckboxes()" class="form-check-input" type="checkbox" id="<%=usersArr[i].id%>" name="myAction" > 
+              </form>
+            </td>
+            <td scope="col"><%= usersArr[i].id %></td>
+            <td scope="col"><%= usersArr[i].name %></td>
+            <td scope="col"><%= usersArr[i].email %></td>
+            <td scope="col"><%= usersArr[i].dateReg %></td>
+            <td scope="col"><%= usersArr[i].lastDate %></td>
+            <td scope="col"><%= usersArr[i].status %></td>
+          </tr>
+          <%  }) %>   
+      </tbody>
+  </table>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
