@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV == 'production'){
+if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
 
@@ -234,4 +234,4 @@ function checkNotAuthenticated(req,res,next){
     next()
 }
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
