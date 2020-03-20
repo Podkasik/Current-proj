@@ -30,7 +30,7 @@
 
   <ul style="list-style-type: none;">
     <li style="float:left">
-      <form method="POST">
+      <form action="/main" method="POST">
         <input type="hidden" value="block" name="action">
         <input type="hidden" name="blocked">
         <button  type="submit" onclick="updateValue(idsArr,'blocked')">
@@ -78,7 +78,7 @@
         <th scope="col" width=300>Email</th>
         <th scope="col" width=300>Дата регистрации</th>
         <th scope="col" width=300>Дата последнего входа</th>
-        <th scope="col" width=300>Статус</th>
+        <th scope="col" width=300>Роль</th>
       </tr>
     </thead>
       <tbody>
@@ -94,7 +94,7 @@
             <td scope="col"><%= usersArr[i].email %></td>
             <td scope="col"><%= usersArr[i].dateReg %></td>
             <td scope="col"><%= usersArr[i].lastDate %></td>
-            <td scope="col"><%= usersArr[i].status %></td>
+            <td scope="col"><%= usersArr[i].role %></td>
           </tr>
           <%  }) %>   
       </tbody>
