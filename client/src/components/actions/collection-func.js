@@ -50,6 +50,7 @@ export const getAllCollections = async () => {
       .catch(err => {
         console.log(err)      
       })
+      console.log(arr)
       return arr
   }
 
